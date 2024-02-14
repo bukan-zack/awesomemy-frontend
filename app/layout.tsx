@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import localFont from "next/font/local";
 import clsx from "clsx";
-import "./globals.css";
+import { Navigation } from "@/app/components/Navigation";
+import "@/app/globals.css";
 
 const outfit = Outfit({
     subsets: ["latin"],
@@ -26,7 +27,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={clsx(outfit.variable, calSans.variable, "bg-[#0C0C0C] font-sans")}>
+            <body className={clsx(outfit.variable, calSans.variable, "bg-[#0C0C0C] font-sans text-white/80")}>
+                <Navigation />
                 {children}
             </body>
         </html>
