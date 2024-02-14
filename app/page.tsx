@@ -32,8 +32,8 @@ export default function Home() {
                                         {project.description}
                                     </p>
                                     <div className="flex flex-row gap-2 mt-4 text-sm">
-                                        {project.tags.map((tag) => (
-                                            <span className="px-4 py-1 bg-white/5 rounded-md">
+                                        {project.tags.map((tag, ix) => (
+                                            <span className="px-4 py-1 bg-white/5 rounded-md" key={ix}>
                                                 {tag}
                                             </span>
                                         ))}
