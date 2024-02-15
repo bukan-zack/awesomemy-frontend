@@ -6,6 +6,8 @@ export interface Project {
     name: string;
     description: string;
     tags: string[];
+    repository: string | null;
+    website: string | null;
     createdAt: Date;
 }
 
@@ -15,6 +17,8 @@ export function rawIntoProject(data: any) {
         name: data.name,
         description: data.description,
         tags: data.tags,
+        repository: data.repository,
+        website: data.website,
         createdAt: new Date(data.created_at),
     } as Project;
 }
@@ -65,10 +69,64 @@ export function fetchUserProjects(page: number, limit: number) {
     });
 }
 
-export function fetchUserProject(uuid: string) {
+export function storeProject({
+    name,
+    description,
+    tags,
+    repository,
+    website,
+}: {
+    name: string;
+    description: string;
+    tags: string[];
+    repository: string;
+    website: string;
+}) {
     return new Promise<Project>((res, rej) => {
-        client.get(`/client/projects/${uuid}`)
+        client.post("/client/projects", {
+            name: name,
+            description: description,
+            tags: tags,
+            repository: repository,
+            website: website,
+        })
             .then(({ data }) => res(rawIntoProject(data.item)))
+            .catch(rej);
+    }); 
+}
+
+export function updateProject({
+    uuid,
+    name,
+    description,
+    tags,
+    repository,
+    website,
+}: {
+    uuid: string;
+    name: string;
+    description: string;
+    tags: string[];
+    repository: string;
+    website: string;
+}) {
+    return new Promise<Project>((res, rej) => {
+        client.post(`/client/projects/${uuid}`, {
+            name: name,
+            description: description,
+            tags: tags,
+            repository: repository,
+            website: website,
+        })
+            .then(({ data }) => res(rawIntoProject(data.item)))
+            .catch(rej);
+    }); 
+}
+
+export function deleteProject(uuid: string) {
+    return new Promise<void>((res, rej) => {
+        client.delete(`/client/projects/${uuid}`)
+            .then(() => res())
             .catch(rej);
     });
 }

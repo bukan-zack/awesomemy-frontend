@@ -7,8 +7,9 @@ import { ProjectCard } from "@/app/projects/ProjectCard";
 import { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Spinner } from "@/app/components/Spinner";
 
-export default function Projects() {
+export default function Page() {
     const searchParams = useSearchParams();
     const pathName = usePathname();
     const [page, setPage] = useState(1);
@@ -19,12 +20,22 @@ export default function Projects() {
     }, [searchParams, pathName]);
 
     return (
-        <main className="max-w-6xl mx-auto px-8 flex py-8 flex-col justify-center">
+        <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
             <TransitionWrapper key={page}>
-                <h2 className="font-cal-sans text-4xl md:text-5xl text-white tracking-wider mb-4">
+                <Link href="/" className="mb-6 transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18">
+                        </path>
+                    </svg>
+                    Home
+                </Link>
+                <h2 className="font-cal-sans text-4xl md:text-5xl text-white tracking-wider">
                     Projects
                 </h2>
-                {!data ? "Loading..." : data.projects.length === 0 ? "No projects here... yet" : (
+                <p className="md:text-lg mt-1 tracking-wide mb-4">
+                    Explore a diverse range of projects revolutionizing the Malaysian tech landscape.
+                </p>
+                {!data ? <Spinner centered /> : data.projects.length === 0 ? "No projects here... yet" : (
                     <>
                         <div className="grid md:grid-cols-3 gap-4">
                             {data.projects.map((project, ix) => (
@@ -39,7 +50,7 @@ export default function Projects() {
                                 {page > 1 &&
                                     <Link href={`/projects?page=${page - 1}`} className="transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18">
+                                            <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18">
                                             </path>
                                         </svg>
                                         Previous

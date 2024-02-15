@@ -21,3 +21,11 @@ export function fetchAuthenticatedUser() {
             .catch(rej);
     });
 }
+
+export function logoutUser() {
+    return new Promise<void>((res, rej) => {
+        client.post("/auth/logout")
+            .then(() => res())
+            .catch(rej);
+    });
+}

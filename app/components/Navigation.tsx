@@ -4,10 +4,16 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/app/lib/stores/user";
+import { logoutUser } from "@/app/lib/http/user";
 
 export function Navigation() {
     const [scrolled, setScrolled] = useState(false);
-    const { user } = useUserStore();
+    const { user, setUser } = useUserStore();
+
+    function handleLogout() {
+        logoutUser()
+            .then(() => setUser(null));
+    }
 
     useEffect(() => {
         function handleScroll() {
@@ -29,12 +35,20 @@ export function Navigation() {
             </Link>
             <div className="gap-6 flex flex-row">
                 {user ? (
-                    <Link href="/dashboard">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 16 16">
-                            <path fill="currentColor" d="M8 8a3 3 0 1 0 0-6a3 3 0 0 0 0 6m4.735 6c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139z">
-                            </path>
-                        </svg>
-                    </Link>
+                    <>
+                        <Link href="/dashboard">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 16 16">
+                                <path fill="currentColor" d="M8 8a3 3 0 1 0 0-6a3 3 0 0 0 0 6m4.735 6c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139z">
+                                </path>
+                            </svg>
+                        </Link>
+                        <button onClick={() => handleLogout()}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
+                                <path fill="currentColor" fillRule="evenodd" d="M16.5 3.75a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-6a1.5 1.5 0 0 1-1.5-1.5V15a.75.75 0 0 0-1.5 0v3.75a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5.25a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3V9A.75.75 0 1 0 9 9V5.25a1.5 1.5 0 0 1 1.5-1.5zM5.78 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 0 0 1.06-1.06l-1.72-1.72H15a.75.75 0 0 0 0-1.5H4.06l1.72-1.72a.75.75 0 0 0 0-1.06" clipRule="evenodd">
+                                </path>
+                            </svg>
+                        </button>
+                    </>
                 ) : (
                     <Link href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/oauth2`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">

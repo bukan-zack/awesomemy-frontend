@@ -5,20 +5,25 @@ import Link from "next/link";
 import useSWR from "swr";
 import { fetchUserProjects } from "@/app/lib/http/project";
 import { ProjectCard } from "@/app/dashboard/projects/ProjectCard";
+import { Spinner } from "@/app/components/Spinner";
 
-export default function Dashboard() {
+export default function Page() {
     const { data } = useSWR("/client/projects?page=1&limit=3", () => fetchUserProjects(1, 3));
 
     return (
-        <main className="max-w-6xl mx-auto px-8 flex py-8 flex-col justify-center">
+        <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
             <TransitionWrapper>
-                <h1 className="font-cal-sans mt-16 text-5xl md:text-6xl text-white tracking-wider mb-4">
-                    Dashboard
-                </h1>
-                <h2 className="font-cal-sans mt-16 text-4xl md:text-5xl text-white tracking-wider mb-4">
-                    Projects
-                </h2>
-                {!data ? "Loading..." : data.projects.length === 0 ? "No projects here... yet" : (
+                <div className="flex flex-col md:flex-row gap-4 md:items-center mb-8 md:mb-4 justify-between">
+                    <h2 className="font-cal-sans text-4xl md:text-5xl text-white tracking-wider">
+                        Your Projects
+                    </h2>
+                    <div>
+                        <Link href="/dashboard/projects/new" className="bg-white rounded-lg text-black px-4 py-2">
+                            New
+                        </Link>
+                    </div>
+                </div>
+                {!data ? <Spinner centered /> : data.projects.length === 0 ? "No projects here... yet" : (
                     <div className="grid md:grid-cols-3 gap-4">
                         {data.projects.map((project, ix) => (
                             <ProjectCard project={project} key={ix} />

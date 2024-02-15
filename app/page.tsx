@@ -4,9 +4,10 @@ import useSWR from "swr";
 import Link from "next/link";
 import { fetchProjects } from "@/app/lib/http/project";
 import { TransitionWrapper } from "@/app/components/TransitionWrapper";
-import { ProjectCard } from "./projects/ProjectCard";
+import { ProjectCard } from "@/app/projects/ProjectCard";
+import { Spinner } from "@/app/components/Spinner";
 
-export default function Home() {
+export default function Page() {
     const { data } = useSWR("/public/projects?page=1&limit=3", () => fetchProjects(1, 3));
     
     return (
@@ -18,10 +19,13 @@ export default function Home() {
                 <p className="text-center md:text-xl mt-2 tracking-wide">
                     Your all-in-one hub for exploring groundbreaking innovations, disruptive startups, exclusive insights, and dynamic events shaping the Malaysian tech scene.
                 </p>
-                <h2 className="font-cal-sans mt-16 text-4xl md:text-5xl text-white tracking-wider mb-4">
+                <h2 className="font-cal-sans mt-24 text-4xl md:text-5xl text-white tracking-wider">
                     Projects
                 </h2>
-                {!data ? "Loading..." : data.projects.length === 0 ? "No projects here... yet" : (
+                <p className="md:text-lg mt-1 tracking-wide mb-4">
+                    Explore a diverse range of projects revolutionizing the Malaysian tech landscape.
+                </p>
+                {!data ? <Spinner centered /> : data.projects.length === 0 ? "No projects here... yet" : (
                     <div className="grid md:grid-cols-3 gap-4">
                         {data.projects.map((project, ix) => (
                             <ProjectCard project={project} key={ix} />
