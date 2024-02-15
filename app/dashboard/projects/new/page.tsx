@@ -1,12 +1,11 @@
 "use client";
 
-import { Spinner } from "@/app/components/Spinner";
 import { TransitionWrapper } from "@/app/components/TransitionWrapper";
-import { Project, deleteProject, fetchProject, storeProject, updateProject } from "@/app/lib/http/project";
+import { storeProject } from "@/app/lib/http/project";
 import clsx from "clsx";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface ProjectInput {
