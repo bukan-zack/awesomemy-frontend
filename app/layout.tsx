@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import clsx from "clsx";
 import { Navigation } from "@/app/components/Navigation";
 import "@/app/globals.css";
+import { Authenticated } from "./Authenticated";
 
 const outfit = Outfit({
     subsets: ["latin"],
@@ -28,8 +29,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={clsx(outfit.variable, calSans.variable, "bg-[#0C0C0C] font-sans text-white/80")}>
-                <Navigation />
-                {children}
+                <Authenticated>
+                    <Navigation />
+                    {children}
+                </Authenticated>
             </body>
         </html>
     );
