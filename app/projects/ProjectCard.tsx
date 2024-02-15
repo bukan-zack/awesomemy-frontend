@@ -15,7 +15,7 @@ export function ProjectCard({
                     {project.name}
                 </h3>
                 <p>
-                    {truncate(project.description, 64)}
+                    {truncate(project.description, 128)}
                 </p>
                 <div className="flex flex-row gap-2 mt-4 text-sm">
                     {project.tags.length > 3 ? (
