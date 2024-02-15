@@ -49,6 +49,14 @@ export function fetchProject(uuid: string) {
             .catch(rej);
     });
 }
+export function fetchProjectEdge(uuid: string) {
+    return new Promise<Project>((res, rej) => {
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/projects/${uuid}`)
+            .then((res) => res.json().then((data) => data))
+            .then((data) => res(rawIntoProject(data.item)))
+            .catch(rej);
+    });
+}
 
 export function fetchUserProjects(page: number, limit: number) {
     return new Promise<{
