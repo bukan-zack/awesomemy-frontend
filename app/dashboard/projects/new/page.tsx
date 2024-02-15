@@ -60,7 +60,7 @@ export default function Page() {
                         <span>
                             Description
                         </span>
-                        <input
+                        <textarea
                             className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                             placeholder="Description"
                             {...register("description")}
