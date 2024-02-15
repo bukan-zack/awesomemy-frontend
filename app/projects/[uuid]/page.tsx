@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+export const runtime = "edge";
+
 export default function Page() {
     const { uuid } = useParams<{
         uuid: string;

@@ -17,6 +17,8 @@ interface ProjectInput {
     website: string;
 }
 
+export const runtime = "edge";
+
 export default function Page() {
     const router = useRouter();
     const { uuid } = useParams<{
