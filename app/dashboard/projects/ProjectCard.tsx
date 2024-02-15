@@ -8,7 +8,7 @@ export function ProjectCard({
     project: Project;
 }) {
     return (
-        <Link href={`/projects/${project.uuid}`}>
+        <Link href={`/dashboard/projects/${project.uuid}`}>
             <div className="transition duration-500 ease-in-out border border-white/10 hover:border-white/20 px-6 py-4 rounded-lg">
                 <h3 className="text-white text-xl">
                     {project.name}

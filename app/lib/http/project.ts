@@ -19,7 +19,7 @@ export function rawIntoProject(data: any) {
     } as Project;
 }
 
-export function fetchProjects(page: number) {
+export function fetchProjects(page: number, limit: number) {
     return new Promise<{
         projects: Project[];
         pagination: Pagination;
@@ -27,12 +27,48 @@ export function fetchProjects(page: number) {
         client.get("/public/projects", {
             params: {
                 page: page,
+                limit: limit,
             },
         })
             .then(({ data }) => res({
                 projects: data.items.map((rawProject: any) => rawIntoProject(rawProject)),
                 pagination: rawIntoPagination(data.pagination),
             }))
+            .catch(rej);
+    });
+}
+
+export function fetchProject(uuid: string) {
+    return new Promise<Project>((res, rej) => {
+        client.get(`/public/projects/${uuid}`)
+            .then(({ data }) => res(rawIntoProject(data.item)))
+            .catch(rej);
+    });
+}
+
+export function fetchUserProjects(page: number, limit: number) {
+    return new Promise<{
+        projects: Project[];
+        pagination: Pagination;
+    }>((res, rej) => {
+        client.get("/client/projects", {
+            params: {
+                page: page,
+                limit: limit,
+            },
+        })
+            .then(({ data }) => res({
+                projects: data.items.map((rawProject: any) => rawIntoProject(rawProject)),
+                pagination: rawIntoPagination(data.pagination),
+            }))
+            .catch(rej);
+    });
+}
+
+export function fetchUserProject(uuid: string) {
+    return new Promise<Project>((res, rej) => {
+        client.get(`/client/projects/${uuid}`)
+            .then(({ data }) => res(rawIntoProject(data.item)))
             .catch(rej);
     });
 }
