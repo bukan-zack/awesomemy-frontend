@@ -52,7 +52,7 @@ export function fetchProject(uuid: string) {
 export function fetchProjectEdge(uuid: string) {
     return new Promise<Project>((res, rej) => {
         fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/projects/${uuid}`)
-            .then((res) => res.json().then((data) => data))
+            .then((res) => res.json().then((data) => data).catch((error) => console.error(error)))
             .then((data) => res(rawIntoProject(data.item)))
             .catch(rej);
     });
