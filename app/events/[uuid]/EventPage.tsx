@@ -35,9 +35,11 @@ export function EventPage({
                     <h2 className="font-cal-sans text-4xl md:text-5xl text-white tracking-wider">
                         {event.name}
                     </h2>
-                    <p className="md:text-lg mt-2 tracking-wide">
-                        {event.description}
-                    </p>
+                    <div className="flex flex-col mt-4 md:text-lg tracking-wide gap-1">
+                        {event.description.split("\n").map((text) => (
+                            <p>{text}</p>
+                        ))}
+                    </div>
                     {event.website && (
                         <div className="mt-6">
                             <h3 className="font-cal-sans text-3xl md:text-4xl text-white tracking-wider">

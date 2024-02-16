@@ -35,9 +35,11 @@ export function ProjectPage({
                     <h2 className="font-cal-sans text-4xl md:text-5xl text-white tracking-wider">
                         {project.name}
                     </h2>
-                    <p className="md:text-lg mt-2 tracking-wide">
-                        {project.description}
-                    </p>
+                    <div className="flex flex-col mt-4 md:text-lg tracking-wide gap-1">
+                        {project.description.split("\n").map((text) => (
+                            <p>{text}</p>
+                        ))}
+                    </div>
                     {(project.repository || project.website) && (
                         <div className="mt-6">
                             <h3 className="font-cal-sans text-3xl md:text-4xl text-white tracking-wider">
