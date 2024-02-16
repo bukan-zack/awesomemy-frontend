@@ -78,7 +78,7 @@ export default function Page() {
                         <label htmlFor="tags">
                             Tags
                         </label>
-                        <div className="flex flex-row gap-2">
+                        {tags.length > 0 && <div className="flex flex-row gap-2">
                             {tags.map((tag, ix) => (
                                 <button
                                     type="button"
@@ -93,7 +93,7 @@ export default function Page() {
                                     </svg>
                                 </button>
                             ))}
-                        </div>
+                        </div>}
                         <div className="flex flex-row gap-4 justify-between">
                             <input
                                 className="w-full rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
