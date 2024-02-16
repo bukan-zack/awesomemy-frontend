@@ -36,8 +36,10 @@ export function ProjectPage({
                         {project.name}
                     </h2>
                     <div className="flex flex-col mt-4 md:text-lg tracking-wide gap-1">
-                        {project.description.split("\n").map((text) => (
-                            <p>{text}</p>
+                        {project.description.split("\n").map((text, ix) => (
+                            <p key={ix}>
+                                {text}
+                            </p>
                         ))}
                     </div>
                     {(project.repository || project.website) && (

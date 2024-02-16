@@ -36,8 +36,10 @@ export function EventPage({
                         {event.name}
                     </h2>
                     <div className="flex flex-col mt-4 md:text-lg tracking-wide gap-1">
-                        {event.description.split("\n").map((text) => (
-                            <p>{text}</p>
+                        {event.description.split("\n").map((text, ix) => (
+                            <p key={ix}>
+                                {text}
+                            </p>
                         ))}
                     </div>
                     {event.website && (
