@@ -33,7 +33,7 @@ export default function Page() {
                     Projects
                 </h2>
                 <p className="md:text-lg mt-1 tracking-wide mb-4">
-                    Explore a diverse range of projects revolutionizing the Malaysian tech landscape.
+                    Embark on an exhilarating odyssey through a captivating array of projects that are revolutionising the very fabric of the Malaysian tech landscape!
                 </p>
                 {!data ? <Spinner centered /> : data.projects.length === 0 ? "No projects here... yet" : (
                     <>

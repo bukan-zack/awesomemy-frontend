@@ -2,7 +2,7 @@
 
 import { TransitionWrapper } from "@/app/components/TransitionWrapper";
 import { humanizeError } from "@/app/lib/http/error";
-import { storeProject } from "@/app/lib/http/project";
+import { storeEvent } from "@/app/lib/http/event";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,32 +10,34 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-interface ProjectInput {
+interface EventInput {
     name: string;
     description: string;
     tags: string[];
-    repository: string;
     website: string;
+    startsAt: Date;
+    endsAt: Date;
 }
 
 export default function Page() {
     const router = useRouter();
-    const { handleSubmit, register } = useForm<ProjectInput>();
+    const { handleSubmit, register } = useForm<EventInput>();
     const [submitting, setSubmitting] = useState(false);
 
-    function onSubmit(data: ProjectInput) {
+    function onSubmit(data: EventInput) {
         setSubmitting(true);
 
-        storeProject({
+        storeEvent({
             name: data.name,
             description: data.description,
             tags: [],
-            repository: data.repository,
             website: data.website,
+            startsAt: new Date(),
+            endsAt: new Date(),
         })
-            .then((project) => {
-                toast.info("You have successfully created a project.");
-                router.push(`/dashboard/projects/${project.uuid}`);
+            .then((event) => {
+                toast.info("You have successfully created an event.");
+                router.push(`/dashboard/events/${event.uuid}`);
             })
             .catch((error) => toast.error(humanizeError(error)))
             .finally(() => setSubmitting(false));
@@ -44,12 +46,12 @@ export default function Page() {
     return (
         <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
             <TransitionWrapper>
-                <Link href="/dashboard/projects" className="mb-6 transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">
+                <Link href="/dashboard/events" className="mb-6 transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                         <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18">
                         </path>
                     </svg>
-                    Projects
+                    Events
                 </Link>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
@@ -70,16 +72,6 @@ export default function Page() {
                             className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                             placeholder="Description"
                             {...register("description")}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <span>
-                            Repository
-                        </span>
-                        <input
-                            className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
-                            placeholder="Repository"
-                            {...register("repository")}
                         />
                     </div>
                     <div className="flex flex-col gap-2">

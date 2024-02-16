@@ -6,6 +6,7 @@ import { Navigation } from "@/app/components/Navigation";
 import "@/app/globals.css";
 import { Authenticated } from "./Authenticated";
 import { Suspense } from "react";
+import { Toaster } from "sonner";
 
 const outfit = Outfit({
     subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
                 <Suspense>
                     <Authenticated>
                         <Navigation />
+                        <Toaster />
                         {children}
                     </Authenticated>
                 </Suspense>

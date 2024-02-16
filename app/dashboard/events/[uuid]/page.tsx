@@ -3,7 +3,7 @@
 import { Spinner } from "@/app/components/Spinner";
 import { TransitionWrapper } from "@/app/components/TransitionWrapper";
 import { humanizeError } from "@/app/lib/http/error";
-import { Project, deleteProject, fetchProject, updateProject } from "@/app/lib/http/project";
+import { Event, deleteEvent, fetchEvent, updateEvent } from "@/app/lib/http/event";
 import clsx from "clsx";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -11,12 +11,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-interface ProjectInput {
+interface EventInput {
     name: string;
     description: string;
     tags: string[];
-    repository: string;
     website: string;
+    startsAt: Date;
+    endsAt: Date;
 }
 
 export const runtime = "edge";
@@ -26,35 +27,36 @@ export default function Page() {
     const { uuid } = useParams<{
         uuid: string;
     }>();
-    const { handleSubmit, register } = useForm<ProjectInput>();
+    const { handleSubmit, register } = useForm<EventInput>();
     const [loading, setLoading] = useState(true);
-    const [project, setProject] = useState<Project>({} as Project);
+    const [event, setEvent] = useState<Event>({} as Event);
     const [submitting, setSubmitting] = useState(false);
 
     function handleDeletion() {
-        deleteProject(project.uuid)
-            .then(() => router.push("/dashboard/projects"));
+        deleteEvent(event.uuid)
+            .then(() => router.push("/dashboard/events"));
     }
 
-    function onSubmit(data: ProjectInput) {
+    function onSubmit(data: EventInput) {
         setSubmitting(true);
 
-        updateProject({
-            uuid: project.uuid,
+        updateEvent({
+            uuid: event.uuid,
             name: data.name,
             description: data.description,
-            tags: project.tags,
-            repository: data.repository,
+            tags: event.tags,
             website: data.website,
+            startsAt: new Date(),
+            endsAt: new Date(),
         })  
-            .then(() => toast.info("You have successfully updated the project details."))
+            .then(() => toast.info("You have successfully updated the event details."))
             .catch((error) => toast.error(humanizeError(error)))
             .finally(() => setSubmitting(false));
     }
 
     useEffect(() => {
-        fetchProject(uuid)
-            .then((project) => setProject(project))
+        fetchEvent(uuid)
+            .then((event) => setEvent(event))
             .catch((error) => console.error(error))
             .finally(() => setLoading(false));
     }, []);
@@ -63,12 +65,12 @@ export default function Page() {
         <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
             {loading ? <Spinner centered /> : (
                 <TransitionWrapper>
-                    <Link href="/dashboard/projects" className="mb-6 transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">
+                    <Link href="/dashboard/events" className="mb-6 transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                             <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18">
                             </path>
                         </svg>
-                        Projects
+                        Events
                     </Link>
                     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                         <div className="flex flex-col gap-2">
@@ -78,7 +80,7 @@ export default function Page() {
                             <input
                                 className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                                 placeholder="Name"
-                                defaultValue={project.name}
+                                defaultValue={event.name}
                                 {...register("name")}
                             />
                         </div>
@@ -89,19 +91,8 @@ export default function Page() {
                             <textarea
                                 className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                                 placeholder="Description"
-                                defaultValue={project.description}
+                                defaultValue={event.description}
                                 {...register("description")}
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <span>
-                                Repository
-                            </span>
-                            <input
-                                className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
-                                placeholder="Repository"
-                                defaultValue={project.repository ?? ""}
-                                {...register("repository")}
                             />
                         </div>
                         <div className="flex flex-col gap-2">
@@ -111,7 +102,7 @@ export default function Page() {
                             <input
                                 className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                                 placeholder="Website"
-                                defaultValue={project.website ?? ""}
+                                defaultValue={event.website ?? ""}
                                 {...register("website")}
                             />
                         </div>
