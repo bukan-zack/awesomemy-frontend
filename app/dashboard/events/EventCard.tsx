@@ -10,7 +10,7 @@ export function EventCard({
 }) {
     return (
         <Link href={`/dashboard/events/${event.uuid}`}>
-            <div className="transition duration-500 ease-in-out border border-white/15 hover:border-white/20 px-6 py-4 rounded-lg">
+            <div className="overflow-hidden transition duration-500 ease-in-out border border-white/15 hover:border-white/20 px-6 py-4 rounded-lg">
                 <h3 className="text-white text-xl">
                     {event.name}
                 </h3>

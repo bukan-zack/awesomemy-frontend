@@ -14,7 +14,7 @@ export default function Page() {
     const { data: eventData } = useSWR("/client/events?page=1&limit=3", () => fetchUserEvents(1, 3));
 
     return (
-        <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
+        <main className="max-w-6xl mx-auto px-8 flex py-10 flex-col justify-center">
             <TransitionWrapper>
                 <div className="flex flex-col md:flex-row gap-4 md:items-center mb-8 md:mb-4 justify-between">
                     <h2 className="font-cal-sans text-4xl md:text-5xl text-white tracking-wider">

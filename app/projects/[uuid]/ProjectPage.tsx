@@ -22,7 +22,7 @@ export function ProjectPage({
     }, []);
     
     return (
-        <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
+        <main className="max-w-6xl mx-auto px-8 flex py-10 flex-col justify-center">
             {loading ? <Spinner centered /> : (
                 <TransitionWrapper>
                     <Link href="/projects" className="mb-6 transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">

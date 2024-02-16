@@ -20,7 +20,7 @@ export default function Page() {
     }, [searchParams, pathName]);
 
     return (
-        <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
+        <main className="max-w-6xl mx-auto px-8 flex py-10 flex-col justify-center">
             <TransitionWrapper key={page}>
                 <Link href="/" className="mb-6 transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">

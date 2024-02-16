@@ -21,7 +21,9 @@ interface ProjectInput {
 export default function Page() {
     const router = useRouter();
     const { handleSubmit, register } = useForm<ProjectInput>();
-    const [submitting, setSubmitting] = useState(false);
+    const [submitting, setSubmitting] = useState<boolean>(false);
+    const [inputTag, setInputTag] = useState<string>("");
+    const [tags, setTags] = useState<string[]>([]);
 
     function onSubmit(data: ProjectInput) {
         setSubmitting(true);
@@ -29,7 +31,7 @@ export default function Page() {
         storeProject({
             name: data.name,
             description: data.description,
-            tags: [],
+            tags: tags,
             repository: data.repository,
             website: data.website,
         })
@@ -42,7 +44,7 @@ export default function Page() {
     }
     
     return (
-        <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
+        <main className="max-w-6xl mx-auto px-8 flex py-10 flex-col justify-center">
             <TransitionWrapper>
                 <Link href="/dashboard/projects" className="mb-6 transition duration-500 ease-in-out text-white/50 hover:text-white/70 flex flex-row gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -53,9 +55,9 @@ export default function Page() {
                 </Link>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
-                        <span>
+                        <label htmlFor="name">
                             Name
-                        </span>
+                        </label>
                         <input
                             className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                             placeholder="Name"
@@ -63,9 +65,9 @@ export default function Page() {
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <span>
+                        <label htmlFor="description">
                             Description
-                        </span>
+                        </label>
                         <textarea
                             className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                             placeholder="Description"
@@ -73,9 +75,45 @@ export default function Page() {
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <span>
+                        <label htmlFor="tags">
+                            Tags
+                        </label>
+                        <div className="flex flex-row gap-2">
+                            {tags.map((tag, ix) => (
+                                <button
+                                    type="button"
+                                    className="flex flex-row gap-2 items-center px-4 py-1 border border-white/10 rounded-md"
+                                    key={ix} 
+                                    onClick={() => setTags(tags.filter((item) => item !== tag))}
+                                >
+                                    {tag}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.25em" height="1.25em" viewBox="0 0 24 24">
+                                        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12">
+                                        </path>
+                                    </svg>
+                                </button>
+                            ))}
+                        </div>
+                        <div className="flex flex-row gap-4 justify-between">
+                            <input
+                                className="w-full rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
+                                placeholder="Tag"
+                                onChange={(e) => setInputTag(e.target.value)}
+                            />
+                            <button
+                                disabled={submitting}
+                                type="button"
+                                onClick={() => inputTag !== "" && setTags([...tags, inputTag])}
+                                className={clsx("bg-white rounded-lg text-black px-4 py-2", submitting && "bg-opacity-80")}
+                            >
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="repository">
                             Repository
-                        </span>
+                        </label>
                         <input
                             className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                             placeholder="Repository"
@@ -83,9 +121,9 @@ export default function Page() {
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <span>
+                        <label htmlFor="website">
                             Website
-                        </span>
+                        </label>
                         <input
                             className="rounded-lg px-4 py-2 transition duration-500 ease-in-out bg-transparent border outline-none border-white/20 hover:border-white/50 focus:border-white/50"
                             placeholder="Website"
