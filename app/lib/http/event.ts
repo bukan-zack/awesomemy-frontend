@@ -131,8 +131,8 @@ export function updateEvent({
             description: description,
             tags: tags,
             website: website,
-            starts_at: startsAt.toJSON(),
-            ends_at: endsAt.toJSON(),
+            starts_at: startsAt,
+            ends_at: endsAt,
         })
             .then(({ data }) => res(rawIntoEvent(data.item)))
             .catch(rej);
