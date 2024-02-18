@@ -10,8 +10,8 @@ import { fetchUserEvents } from "../lib/http/event";
 import { EventCard } from "@/app/dashboard/events/EventCard";
 
 export default function Page() {
-    const { data: projectData } = useSWR("/client/projects?page=1&limit=3", () => fetchUserProjects(1, 3));
-    const { data: eventData } = useSWR("/client/events?page=1&limit=3", () => fetchUserEvents(1, 3));
+    const { data: projectData } = useSWR("/client/projects?page=1&limit=3", () => fetchUserProjects(1, 3, "desc"));
+    const { data: eventData } = useSWR("/client/events?page=1&limit=3", () => fetchUserEvents(1, 3, "desc"));
 
     return (
         <main className="max-w-6xl mx-auto px-8 flex py-10 flex-col justify-center">
