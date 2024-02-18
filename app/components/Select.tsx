@@ -25,6 +25,7 @@ const SelectTrigger = React.forwardRef<
         </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
 ));
+SelectTrigger.displayName = "SelectTrigger";
 
 const SelectValue = SelectPrimitive.Value;
 
@@ -54,6 +55,7 @@ const SelectContent = React.forwardRef<
         </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
 ));
+SelectContent.displayName = "SelectContent";
 
 const SelectItem = React.forwardRef<
     React.ElementRef<typeof SelectPrimitive.Item>,
@@ -80,6 +82,7 @@ const SelectItem = React.forwardRef<
         </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
 ));
+SelectItem.displayName = "SelectItem";
 
 export const Select = {
     Root: SelectRoot,
