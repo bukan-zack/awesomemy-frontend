@@ -1,5 +1,5 @@
 import { client } from "@/app/lib/http/client";
-import { Pagination, rawIntoPagination } from "@/app/lib/http/pagination";
+import { PaginationMeta, rawIntoPaginationMeta } from "@/app/lib/http/pagination";
 
 export interface Project {
     uuid: string;
@@ -23,20 +23,21 @@ export function rawIntoProject(data: any) {
     } as Project;
 }
 
-export function fetchProjects(page: number, limit: number) {
+export function fetchProjects(page: number, limit: number, orderBy: string) {
     return new Promise<{
         projects: Project[];
-        pagination: Pagination;
+        paginationMeta: PaginationMeta;
     }>((res, rej) => {
         client.get("/public/projects", {
             params: {
                 page: page,
                 limit: limit,
+                orderBy: orderBy,
             },
         })
             .then(({ data }) => res({
                 projects: data.items.map((rawProject: any) => rawIntoProject(rawProject)),
-                pagination: rawIntoPagination(data.pagination),
+                paginationMeta: rawIntoPaginationMeta(data.pagination),
             }))
             .catch(rej);
     });
@@ -58,20 +59,21 @@ export function fetchProjectEdge(uuid: string) {
     });
 }
 
-export function fetchUserProjects(page: number, limit: number) {
+export function fetchUserProjects(page: number, limit: number, orderBy: string) {
     return new Promise<{
         projects: Project[];
-        pagination: Pagination;
+        paginationMeta: PaginationMeta;
     }>((res, rej) => {
         client.get("/client/projects", {
             params: {
                 page: page,
                 limit: limit,
+                orderBy: orderBy,
             },
         })
             .then(({ data }) => res({
                 projects: data.items.map((rawProject: any) => rawIntoProject(rawProject)),
-                pagination: rawIntoPagination(data.pagination),
+                paginationMeta: rawIntoPaginationMeta(data.pagination),
             }))
             .catch(rej);
     });

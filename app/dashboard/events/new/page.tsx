@@ -80,7 +80,7 @@ export default function Page() {
                         <label htmlFor="tags">
                             Tags
                         </label>
-                        {tags.length > 0 && <div className="flex flex-row gap-2">
+                        {tags.length > 0 && <div className="flex flex-row gap-2 overflow-hidden">
                             {tags.map((tag, ix) => (
                                 <button
                                     type="button"

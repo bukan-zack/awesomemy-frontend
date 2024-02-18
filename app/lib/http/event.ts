@@ -1,5 +1,5 @@
 import { client } from "@/app/lib/http/client";
-import { Pagination, rawIntoPagination } from "@/app/lib/http/pagination";
+import { PaginationMeta, rawIntoPaginationMeta } from "@/app/lib/http/pagination";
 
 export interface Event {
     uuid: string;
@@ -25,20 +25,21 @@ export function rawIntoEvent(data: any) {
     } as Event;
 }
 
-export function fetchEvents(page: number, limit: number) {
+export function fetchEvents(page: number, limit: number, orderBy: string) {
     return new Promise<{
         events: Event[];
-        pagination: Pagination;
+        paginationMeta: PaginationMeta;
     }>((res, rej) => {
         client.get("/public/events", {
             params: {
                 page: page,
                 limit: limit,
+                orderBy: orderBy,
             },
         })
             .then(({ data }) => res({
                 events: data.items.map((rawEvent: any) => rawIntoEvent(rawEvent)),
-                pagination: rawIntoPagination(data.pagination),
+                paginationMeta: rawIntoPaginationMeta(data.pagination),
             }))
             .catch(rej);
     });
@@ -60,20 +61,21 @@ export function fetchEventEdge(uuid: string) {
     });
 }
 
-export function fetchUserEvents(page: number, limit: number) {
+export function fetchUserEvents(page: number, limit: number, orderBy: string) {
     return new Promise<{
         events: Event[];
-        pagination: Pagination;
+        paginationMeta: PaginationMeta;
     }>((res, rej) => {
         client.get("/client/events", {
             params: {
                 page: page,
                 limit: limit,
+                orderBy: orderBy,
             },
         })
             .then(({ data }) => res({
                 events: data.items.map((rawEvent: any) => rawIntoEvent(rawEvent)),
-                pagination: rawIntoPagination(data.pagination),
+                paginationMeta: rawIntoPaginationMeta(data.pagination),
             }))
             .catch(rej);
     });
