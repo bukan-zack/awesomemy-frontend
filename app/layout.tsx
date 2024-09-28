@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import clsx from "clsx";
 import { Navigation } from "@/app/components/Navigation";
@@ -8,18 +8,23 @@ import { Authenticated } from "./Authenticated";
 import { Suspense } from "react";
 import { Toaster } from "sonner";
 
-const outfit = Outfit({
+const jetbrainsMono = JetBrains_Mono({
     subsets: ["latin"],
-    variable: "--font-outfit",
+    variable: "--font-jetbrains-mono",
 });
 
-const calSans = localFont({
-    src: "./fonts/CalSans-SemiBold.woff2",
-    variable: "--font-cal-sans",
+const mattoneBold = localFont({
+    src: "./fonts/Mattone-Bold.woff2",
+    variable: "--font-mattone-bold",
+});
+
+const mattone = localFont({
+    src: "./fonts/Mattone-Bold.woff2",
+    variable: "--font-mattone-regular",
 });
 
 export const metadata: Metadata = {
-    title: "AwesomeMY",
+    title: "Tech in Malaysia",
     description: "Your all-in-one hub for exploring groundbreaking innovations, disruptive startups, exclusive insights, and dynamic events shaping the Malaysian tech scene.",
 };
 
@@ -30,13 +35,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={clsx(outfit.variable, calSans.variable, "bg-[#0C0C0C] font-sans text-white/80")}>
+            <body className={clsx(jetbrainsMono.variable, mattoneBold.variable, mattone.variable, "bg-main-navy font-sans text-white/80")}>
                 <Suspense>
-                    <Authenticated>
-                        <Navigation />
-                        <Toaster />
-                        {children}
-                    </Authenticated>
+                    <Navigation />
+                    <Toaster />
+                    {children}
                 </Suspense>
             </body>
         </html>

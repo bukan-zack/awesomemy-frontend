@@ -8,9 +8,14 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            colors: {
+                "main-navy": "#09001C",
+                "main-orange": "#EE6F00",
+            },
             fontFamily: {
-                "sans": ["var(--font-outfit)", "sans-serif"],
-                "cal-sans": ["var(--font-cal-sans)"],
+                "sans": ["var(--font-jetbrains-mono)", "sans-serif"],
+                "mattone": ["var(--font-mattone)"],
+                "mattone-bold": ["var(--font-mattone-bold)"],
             },
         },
     },
