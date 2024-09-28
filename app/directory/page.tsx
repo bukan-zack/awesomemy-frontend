@@ -14,7 +14,7 @@ export default function Page() {
     const { data: eventData } = useSWR("/public/events?page=1&limit=3", () => fetchEvents(1, 3, "desc"));
 
     return (
-        <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col justify-center">
+        <main className="max-w-6xl mx-auto px-12 flex py-24 flex-col justify-center">
             <TransitionWrapper>
                 <h1 className="uppercase text-white text-5xl md:text-7xl tracking-wide">
                     Directory

@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import clsx from "clsx";
 import { Navigation } from "@/app/components/Navigation";
 import "@/app/globals.css";
-import { Authenticated } from "./Authenticated";
 import { Suspense } from "react";
 import { Toaster } from "sonner";
 
@@ -25,7 +24,7 @@ const mattone = localFont({
 
 export const metadata: Metadata = {
     title: "Tech in Malaysia",
-    description: "Your all-in-one hub for exploring groundbreaking innovations, disruptive startups, exclusive insights, and dynamic events shaping the Malaysian tech scene.",
+    description: "Tech in Malaysia is a dynamic community dedicated to empowering and connecting Malaysian professionals in the technology sector.",
 };
 
 export default function RootLayout({
