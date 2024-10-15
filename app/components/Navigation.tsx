@@ -24,6 +24,14 @@ export function Navigation() {
 
     window.addEventListener("scroll", handleScroll);
   }, []);
+  
+  function NavigationLink({ href, children }: { href: string; children: React.ReactNode; }) {
+    return (
+      <Link href={href} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        {children}
+      </Link>
+    );
+  }
 
   return (
     <>
@@ -56,7 +64,7 @@ export function Navigation() {
             />
             <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto px-8 py-6">
               <div className="flex flex-row justify-between items-center">
-                <Link href="/">
+                <NavigationLink href="/">
                   <motion.img 
                     src="./logo.svg"
                     className="w-20" 
@@ -65,7 +73,7 @@ export function Navigation() {
                     exit={{ opacity: 0, translateY: 20 }}
                     transition={{ when: "after_children", duration: 0.6, ease: "easeInOut" }}
                   />
-                </Link>
+                </NavigationLink>
                 <motion.button
                   initial={{ opacity: 0, translateX: 20 }}
                   animate={{ opacity: 1, translateX: 0 }}
@@ -83,7 +91,9 @@ export function Navigation() {
                 transition={{ when: "before_children", duration: 0.6, ease: "easeInOut" }}
                 className="mt-5"
               >
-                <Link href="/showcase">Community Showcase</Link>
+                <NavigationLink href="/showcase">
+                  Community Showcase
+                </NavigationLink>
               </motion.div>
             </DialogPanel>
           </Dialog>
