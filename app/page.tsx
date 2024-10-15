@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <main className="max-w-6xl mx-auto px-12 flex py-24 flex-col items-center">
+    <main className="max-w-6xl mx-auto px-8 flex py-24 flex-col items-center">
       <TransitionWrapper>
         <h1 className="[word-spacing:-15px] uppercase text-white text-5xl md:text-7xl tracking-wide">
           Tech in <span className="font-mattone-bold">Malaysia</span>

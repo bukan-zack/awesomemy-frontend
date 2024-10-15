@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <Suspense>
           <div className="bg-dark-orange">
-            <div className="max-w-6xl px-12 py-3 mx-auto">
+            <div className="max-w-6xl px-8 py-3 mx-auto">
               [INFO] AwesomeMY has merged with DeveloperMY to form Tech in
               Malaysia.
             </div>
